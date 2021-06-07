@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Tenki No App",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
