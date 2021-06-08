@@ -5,7 +5,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,16 +13,14 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule,
-    GooglePlaceModule
+    HttpClientModule
   ],
   providers: [
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
     },
-    HttpClientModule,
-    GooglePlaceModule
+    HttpClientModule
   ],
   bootstrap: [AppComponent],
 })

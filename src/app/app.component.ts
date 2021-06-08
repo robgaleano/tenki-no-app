@@ -8,12 +8,9 @@ import { environment as env } from '@env/environment';
 })
 export class AppComponent implements OnInit {
   public appPages = [
-    { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
+    { title: 'Weather', url: '/weather', icon: 'partly-sunny' },
+    { title: 'Search', url: '/weather-search', icon: 'search' },
+    // { title: 'Settings', url: '/settings', icon: 'settings-outline' }
   ];
   constructor(private httpService: HttpService) { }
 
