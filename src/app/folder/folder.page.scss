@@ -26,3 +26,9 @@ ion-menu-button {
 #container a {
   text-decoration: none;
 }
+
+.pac-logo:after {
+  display: none !important;
+  content: none !important;
+}
+
