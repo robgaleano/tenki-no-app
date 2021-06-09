@@ -1,6 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { HttpService } from '@services/http.service';
-import { environment as env } from '@env/environment';
+import { LocationService } from '@services/location.service';
+import { WeatherService } from '@services/weather.service';
+import { PlaceInfoModel, PlaceModel } from '@models/place.model';
+import { WeatherModel } from '@models/weather.model';
 declare let google;
 
 @Component({
@@ -14,7 +16,9 @@ export class WeatherSearchbarComponent implements OnInit {
   public autocompleteItems: any[];
   public googleAutocomplete: any;
 
-  constructor(private zone: NgZone, private httpService: HttpService) {
+  constructor(private zone: NgZone,
+    private weatherService: WeatherService,
+    private locationService: LocationService) {
   }
 
   ngOnInit() {
@@ -41,17 +45,17 @@ export class WeatherSearchbarComponent implements OnInit {
   }
 
   //wE CALL THIS FROM EACH ITEM.
-  selectSearchResult(item) {
+  selectSearchResult(place: PlaceModel.RootObject) {
     ///WE CAN CONFIGURE MORE COMPLEX FUNCTIONS SUCH AS UPLOAD DATA TO FIRESTORE OR LINK IT TO SOMETHING
     this.clearAutocomplete();
-    console.log(item);
-    const serviceParams = `place_id=${item.place_id}&key=${env.placesApiKey}`;
-    this.httpService.get(env.placesApiUrl, serviceParams).subscribe((resp: any) => {
-      console.log(resp);
-      const latLon = `lat=${resp.result.geometry.location.lat}&lon=${resp.result.geometry.location.lng}`;
-      const weaterParams = latLon.concat(`&appid=${env.weatherApiKey}`).concat(`&units=${env.wheaterUnits}`);
-      this.httpService.get(env.weatherApiUrl, weaterParams).subscribe(weather => {
+
+    this.locationService.getPlaceInfo(place).subscribe((placeInfo: PlaceInfoModel.RootObject) => {
+      const lat = String(placeInfo.result.geometry.location.lat);
+      const lng = String(placeInfo.result.geometry.location.lng);
+      this.weatherService.getWeather(lat, lng).subscribe((weather: WeatherModel.RootObject) => {
         console.log(weather);
+      }, err => {
+        throw new Error(err);
       });
     });
   }

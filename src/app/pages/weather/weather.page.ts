@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LocationService } from '@services/location.service';
 
 @Component({
   selector: 'app-weather',
@@ -9,12 +10,15 @@ import { ActivatedRoute } from '@angular/router';
 export class WeatherPage implements OnInit {
   public folder: string;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private locationService: LocationService) {
 
   }
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+    this.locationService.getPosition().then(response => {
+      console.log(response);
+    });
   }
 
 
