@@ -65,34 +65,34 @@
 /*----------------
 	Media Queries
 -----------------*/
-@media (min-width: 550px) {
+@media (min-width: 708px) {
   /* future-weather Forecast */
   #future-weather {
     font-size: 1.1rem;
     padding: 0;
     margin-bottom: 3%;
-  }
-  #future-weather > .slot-container {
-    border-bottom: none;
-    float: left;
-    padding: 20px;
-    width: 33.33%;
-  }
-  #future-weather > .slot-container:first-child {
-    border-top: none;
-  }
-  #future-weather > .slot-container:not(:last-child) {
-    border-right: 1px solid rgba(0, 0, 0, 0.25);
-  }
-  #future-weather .day,
-  #future-weather p {
-    text-align: center;
-  }
-  #future-weather .weather-icon {
-    font-size: 0.56em;
-    float: none;
-    height: 60px;
-    margin: 10% auto 5%;
-    width: 60px;
+    .slot-container {
+      border-bottom: none;
+      float: left;
+      padding: 16px;
+      width: 14.28%;
+    }
+    .slot-container:first-child {
+      border-top: none;
+    }
+    .slot-container:not(:last-child) {
+      border-right: 1px solid rgba(0, 0, 0, 0.25);
+    }
+    .day,
+    p {
+      text-align: center;
+    }
+    .weather-icon {
+      font-size: 0.56em;
+      float: none;
+      height: 60px;
+      margin: 10% auto 5%;
+      width: 60px;
+    }
   }
 }

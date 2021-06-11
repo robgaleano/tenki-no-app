@@ -12,11 +12,17 @@ import { Observable } from 'rxjs';
 export class WeatherService {
   constructor(private httpService: HttpService) { }
 
-  getWeather(lat: string, lng: string): Observable<any> {
+  public getWeather(lat: string, lng: string): Observable<any> {
     const latLon = `lat=${lat}&lon=${lng}`;
-    const weaterParams = latLon.concat(`&appid=${env.weatherApiKey}`).concat(`&units=${env.wheaterUnits}`);
+    const weatherParams = latLon.concat(`&appid=${env.weatherApiKey}`).concat(`&units=${env.weatherUnits}`);
 
-    return this.httpService.get(env.weatherApiUrl, weaterParams);
+    return this.httpService.get(env.weatherApiUrl, weatherParams);
+  }
+
+  public getAllWeatherInfo(lat: string, lng: string): Observable<any> {
+    const latLon = `lat=${lat}&lon=${lng}`;
+    const weatherParams = latLon.concat(`&appid=${env.weatherApiKey}`).concat(`&units=${env.weatherUnits}`);
+    return this.httpService.get(env.weatherAllApiUrl, weatherParams);
   }
 }
 

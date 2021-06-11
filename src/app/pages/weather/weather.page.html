@@ -23,9 +23,9 @@
           </ion-col>
         </ion-row>
       </section>
-      <section id="future-weather" class="wrapper">
+      <section id="future-weather">
         <!-- Future Forecast -->
-          <div class="slot-container">
+          <div class="slot-container" *ngFor="let forecast of dailyForecast">
             <h3 class="day">Mon</h3>
             <div class="weather-icon">
               <ion-icon class="secondary-weather--icon" name="partly-sunny-outline"></ion-icon>
@@ -33,23 +33,6 @@
             <p class="conditions">Partly Cloudy</p>
             <p class="temp-range"><span class="high">64</span> | <span class="low">48</span></p>
           </div>
-          <div class="slot-container">
-            <h3 class="day">Tue</h3>
-            <div class="weather-icon">
-              <ion-icon class="secondary-weather--icon" name="cloudy-outline"></ion-icon>
-            </div>
-            <p class="conditions">Mostly Cloudy</p>
-            <p class="temp-range"><span class="high">57</span> | <span class="low">45</span></p>
-          </div>
-          <div class="slot-container">
-            <h3 class="day">Wed</h3>
-            <div class="weather-icon">
-              <ion-icon class="secondary-weather--icon" name="rainy-outline"></ion-icon>
-            </div>
-            <p class="conditions">Chance of Rain</p>
-            <p class="temp-range"><span class="high">63</span> | <span class="low">59</span></p>
-          </div>
-
       </section>
     </ion-grid>
   </div>
