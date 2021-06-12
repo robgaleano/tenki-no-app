@@ -22,36 +22,7 @@ export class WeatherPage implements OnInit {
 
   ngOnInit() {
     this.locationService.getPosition().then((position) => {
-      // Change this into a forkJoin or into an observable merge
       this.getAllWetherInfo(position);
-      // this.weatherService.getWeather(position.lat, position.lng).subscribe(
-      //   (weather: WeatherModel.RootObject) => {
-      //     console.log(weather);
-      //     this.todaysWeather = weather;
-      //     this.todaysWeather.main.temp = Math.round(weather.main.temp);
-      //     this.todaysWeather.main.temp_max = Math.round(weather.main.temp_max);
-      //     this.todaysWeather.main.temp_min = Math.round(weather.main.temp_min);
-      //   },
-      //   (err) => {
-      //     throw new Error(err);
-      //   }
-      // );
-
-      // this.weatherService
-      //   .getAllWeatherInfo(position.lat, position.lng)
-      //   .subscribe(
-      //     (forecast: ForecastModel.RootObject) => {
-      //       forecast.daily.map((day: ForecastModel.Day) => {
-      //         day.date = moment.unix(day.dt).format('ddd, MMM D');
-      //         day.temp.max = Math.round(day.temp.max);
-      //         day.temp.min = Math.round(day.temp.min);
-      //       });
-      //       this.futureDaysForecast = forecast.daily;
-      //     },
-      //     (err) => {
-      //       throw new Error(err);
-      //     }
-      //   );
     });
   }
 

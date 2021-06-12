@@ -12,7 +12,7 @@ export class StorageService {
   public async setItem(storageKey: string, value: any) {
     // Encrypt token before saving
     // AES Encryption
-    const encryptedValue = this.encryptDecrypt.encrypt('tenkinoapp$#+#$@ROB', escape(JSON.stringify(value)));
+    const encryptedValue = this.encryptDecrypt.encrypt('tenkinoapp#$@ROB', escape(JSON.stringify(value)));
     // Base64 Encryption
     // const encryptedValue = btoa(escape(JSON.stringify(value)));
     // Save token
@@ -30,7 +30,7 @@ export class StorageService {
       // Base64 Decryption
       // return JSON.parse(unescape(atob(storedItem.value)));
       // AES Decryption
-      return JSON.parse(unescape(this.encryptDecrypt.decrypt('tenkinoapp$#+#$@ROB', storedItem.value)));
+      return JSON.parse(unescape(this.encryptDecrypt.decrypt('tenkinoapp#$@ROB', storedItem.value)));
     } else {
       return false;
     }
@@ -38,6 +38,10 @@ export class StorageService {
 
   public async removeItem(storageKey: string) {
     await Storage.remove({ key: storageKey });
+  }
+
+  public async getAllStorage() {
+    return await Storage.keys();
   }
 
   public async clearItems() {

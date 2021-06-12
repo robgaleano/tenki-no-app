@@ -12,4 +12,8 @@ export class WeatherSearchPage implements OnInit {
   ngOnInit() {
   }
 
+
+  public setCurrentWeather(): void {
+    // IN HERE WE ARE GOING TO LOAD TO THE WIEW EACH ITEM FROM STORAGE IF INTERNET CONNECTION FAILS
+  }
 }

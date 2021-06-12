@@ -1,0 +1,27 @@
+.ws_weather-list {
+  padding: 0;
+  border-top: 5px solid var(--ion-color-primary);
+
+  .ws_weather-list--item {
+    display: flex;
+    align-items: center;
+
+    .ws_item-note {
+      font-size: 2rem;
+    }
+
+    .ws_item-note:after {
+      content: "\00b0";
+      padding: 1px;
+    }
+
+    .ws_item-label {
+      font-size: 1.5rem;
+    }
+
+    .ws_item-icon--img {
+      height: 4.5rem;
+      width: 4.5rem;
+    }
+  }
+}
