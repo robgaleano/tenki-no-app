@@ -4,6 +4,7 @@ import { LocationService } from '@services/location.service';
 import { WeatherModel } from '@models/weather.model';
 import * as moment from 'moment';
 import { ForecastModel } from '@models/forecast.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-weather',
@@ -11,53 +12,80 @@ import { ForecastModel } from '@models/forecast.model';
   styleUrls: ['./weather.page.scss'],
 })
 export class WeatherPage implements OnInit {
-  public dailyForecast: ForecastModel.Day[];
-  public todaysWeather: ForecastModel.Day;
+  public futureDaysForecast: ForecastModel.Day[];
+  public todaysWeather: WeatherModel.RootObject;
 
   constructor(
     private locationService: LocationService,
-    private weatherService: WeatherService) {
-
-  }
+    private weatherService: WeatherService
+  ) {}
 
   ngOnInit() {
-    this.locationService.getPosition().then(position => {
-      this.weatherService.getAllWeatherInfo(position.lat, position.lng).subscribe((forecast: ForecastModel.RootObject) => {
+    this.locationService.getPosition().then((position) => {
+      // Change this into a forkJoin or into an observable merge
+      this.getAllWetherInfo(position);
+      // this.weatherService.getWeather(position.lat, position.lng).subscribe(
+      //   (weather: WeatherModel.RootObject) => {
+      //     console.log(weather);
+      //     this.todaysWeather = weather;
+      //     this.todaysWeather.main.temp = Math.round(weather.main.temp);
+      //     this.todaysWeather.main.temp_max = Math.round(weather.main.temp_max);
+      //     this.todaysWeather.main.temp_min = Math.round(weather.main.temp_min);
+      //   },
+      //   (err) => {
+      //     throw new Error(err);
+      //   }
+      // );
 
-        this.todaysWeather = forecast.daily[0];
-        forecast.daily.shift();
-
-        let currentDate: string = moment().format('DD-MM-YYYY');
-        forecast.daily.map((day: ForecastModel.Day) => {
-          day.date = moment(currentDate).format('ddd');
-          currentDate = moment(currentDate, 'DD-MM-YYYY').add(1, 'days').format('DD-MM-YYYY');
-        });
-        this.dailyForecast = forecast.daily;
-        console.log(this.dailyForecast);
-        // const weekArray = [];
-        // console.log(currentDate);
-        // forecast..forEach((weather: Forecast.List) => {
-        //   console.log(moment(weather.dt_txt).format('DD-MM-YYYY'));
-        //   if (currentDate === moment(weather.dt_txt).format('DD-MM-YYYY')) {
-        //     weekArray.push(weather);
-        //     console.log(moment(currentDate, 'DD-MM-YYYY').add(1, 'days').format('DD-MM-YYYY'));
-        //     currentDate = moment(currentDate, 'DD-MM-YYYY').add(1, 'days').format('DD-MM-YYYY');
-        //   };
-        // });
-        // console.log(weekArray);
-        // this.getWeatherAllInfo(weather);
-      }, err => {
-        throw new Error(err);
-      });
+      // this.weatherService
+      //   .getAllWeatherInfo(position.lat, position.lng)
+      //   .subscribe(
+      //     (forecast: ForecastModel.RootObject) => {
+      //       forecast.daily.map((day: ForecastModel.Day) => {
+      //         day.date = moment.unix(day.dt).format('ddd, MMM D');
+      //         day.temp.max = Math.round(day.temp.max);
+      //         day.temp.min = Math.round(day.temp.min);
+      //       });
+      //       this.futureDaysForecast = forecast.daily;
+      //     },
+      //     (err) => {
+      //       throw new Error(err);
+      //     }
+      //   );
     });
   }
 
-  public getWeatherAllInfo(weather: WeatherModel.RootObject) {
-    const weatherId = weather.id.toString();
-    console.log(weatherId);
-    // this.weatherService.getAllWeatherInfo(weatherId).subscribe((resp: any) => {
-    //   console.log(resp);
-    // });
-  }
+  public getAllWetherInfo(position): void {
+    forkJoin({
+      currentWeather: this.weatherService.getWeather(
+        position.lat,
+        position.lng
+      ),
+      weatherForecast: this.weatherService.getAllWeatherInfo(
+        position.lat,
+        position.lng
+      ),
+    }).subscribe(
+      (weatherObservers) => {
+        console.log(weatherObservers);
+        const weather = weatherObservers.currentWeather;
+        const forecast = weatherObservers.weatherForecast;
 
+        this.todaysWeather = weather;
+        this.todaysWeather.main.temp = Math.round(weather.main.temp);
+        this.todaysWeather.main.temp_max = Math.round(weather.main.temp_max);
+        this.todaysWeather.main.temp_min = Math.round(weather.main.temp_min);
+
+        forecast.daily.map((day: ForecastModel.Day) => {
+          day.date = moment.unix(day.dt).format('ddd, MMM D');
+          day.temp.max = Math.round(day.temp.max);
+          day.temp.min = Math.round(day.temp.min);
+        });
+        this.futureDaysForecast = forecast.daily;
+      },
+      (err) => {
+        throw new Error(err);
+      }
+    );
+  }
 }

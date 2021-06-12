@@ -9,30 +9,55 @@
 
 <ion-content [fullscreen]="true">
   <div id="container">
-    <ion-grid>
+    
+    <ion-spinner
+      name="crescent"
+      class="page-loader"
+      *ngIf="!todaysWeather || !futureDaysForecast"
+    ></ion-spinner>
+
+    <ion-grid *ngIf="todaysWeather && futureDaysForecast">
       <section id="main-weather">
         <ion-row>
-          <!-- size-lg="6" -->
+          <!-- Current Weather-->
           <ion-col size="12">
-            <h1 class="location">Chicago, IL</h1>
+            <h1 class="location">
+              {{todaysWeather?.name}}, {{todaysWeather?.sys.country}}
+            </h1>
+            <p>{{todaysWeather?.weather[0].description | titlecase}}</p>
             <div class="weather-icon">
-              <ion-icon class="main-weather--icon" name="sunny-outline"></ion-icon>
+              <img
+                class="current-weather--img"
+                src="http://openweathermap.org/img/wn/{{todaysWeather?.weather[0].icon}}@2x.png"
+                alt=""
+              />
             </div>
-            <span class="current">72</span>
-            <p class="conditions">Sunny</p>
+            <span class="current">{{todaysWeather?.main.temp}}</span>
+            <p class="temp-range">
+              <span class="high">H {{todaysWeather?.main.temp_max}}</span> |
+              <span class="low">L {{todaysWeather?.main.temp_min}}</span>
+            </p>
           </ion-col>
         </ion-row>
       </section>
       <section id="future-weather">
         <!-- Future Forecast -->
-          <div class="slot-container" *ngFor="let forecast of dailyForecast">
-            <h3 class="day">Mon</h3>
-            <div class="weather-icon">
-              <ion-icon class="secondary-weather--icon" name="partly-sunny-outline"></ion-icon>
-            </div>
-            <p class="conditions">Partly Cloudy</p>
-            <p class="temp-range"><span class="high">64</span> | <span class="low">48</span></p>
+        <div class="slot-container" *ngFor="let forecast of futureDaysForecast">
+          <h3 class="day">{{forecast.date}}</h3>
+          <div class="weather-icon">
+            <img
+              src="http://openweathermap.org/img/wn/{{forecast.weather[0].icon}}@2x.png"
+              alt=""
+            />
           </div>
+          <p class="conditions">
+            {{forecast.weather[0].description | titlecase}}
+          </p>
+          <p class="temp-range">
+            <span class="high">{{forecast.temp.max}}</span> |
+            <span class="low">{{forecast.temp.min}}</span>
+          </p>
+        </div>
       </section>
     </ion-grid>
   </div>
