@@ -4,61 +4,89 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Current Weather</ion-title>
+    <div class="w_main-content--logo-container" (click)="goToSourcePage()">
+      <img
+        class="w_main-content--logo"
+        src="assets/img/weather-logo.png"
+        alt=""
+      />
+    </div>
+    <ion-button
+      class="w_toolbar-button--location"
+      slot="end"
+      (click)="toggleLocation()"
+    >
+      <ion-icon name="navigate"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div id="container">
-    
+  <div id="w_container">
     <ion-spinner
       name="crescent"
-      class="page-loader"
+      class="w_page-loader"
       *ngIf="!todaysWeather || !futureDaysForecast"
     ></ion-spinner>
 
     <ion-grid *ngIf="todaysWeather && futureDaysForecast">
-      <section id="main-weather">
+      <!-- Current Weather-->
+      <section id="w_main-weather">
         <ion-row>
-          <!-- Current Weather-->
           <ion-col size="12">
-            <h1 class="location">
+            <h1 class="w_main-weather--location">
               {{todaysWeather?.name}}, {{todaysWeather?.sys.country}}
             </h1>
-            <p>{{todaysWeather?.weather[0].description | titlecase}}</p>
-            <div class="weather-icon">
+            <p class="w_main-weather--conditions">
+              {{todaysWeather?.weather[0].description | titlecase}}
+            </p>
+            <div class="w_main-weather--icon">
               <img
-                class="current-weather--img"
+                class="w_main-weather--img"
                 src="http://openweathermap.org/img/wn/{{todaysWeather?.weather[0].icon}}@2x.png"
                 alt=""
               />
             </div>
-            <span class="current">{{todaysWeather?.main.temp}}</span>
-            <p class="temp-range">
-              <span class="high">H {{todaysWeather?.main.temp_max}}</span> |
-              <span class="low">L {{todaysWeather?.main.temp_min}}</span>
+            <span class="w_main-weather--temp"
+              >{{todaysWeather?.main.temp}}</span
+            >
+            <p class="w_main-weather--temp-range">
+              <span class="w_main-weather--temp-high"
+                >H {{todaysWeather?.main.temp_max}}</span
+              >
+              |
+              <span class="w_main-weather--temp-low"
+                >L {{todaysWeather?.main.temp_min}}</span
+              >
             </p>
           </ion-col>
         </ion-row>
       </section>
-      <section id="future-weather">
-        <!-- Future Forecast -->
-        <div class="slot-container" *ngFor="let forecast of futureDaysForecast">
-          <h3 class="day">{{forecast.date}}</h3>
-          <div class="weather-icon">
+      <!-- Current Weather-->
+
+      <!-- Future Forecast -->
+      <section id="w_forecast-weather">
+        <div
+          class="w_forecast-weather--slot"
+          *ngFor="let forecast of futureDaysForecast"
+        >
+          <h3 class="w_forecast-day--name">{{forecast.date}}</h3>
+          <div class="w_forecast-weather--icon">
             <img
               src="http://openweathermap.org/img/wn/{{forecast.weather[0].icon}}@2x.png"
               alt=""
             />
           </div>
-          <p class="conditions">
+          <p class="w_forecast--conditions">
             {{forecast.weather[0].description | titlecase}}
           </p>
-          <p class="temp-range">
-            <span class="high">{{forecast.temp.max}}</span> |
-            <span class="low">{{forecast.temp.min}}</span>
+          <p class="w_forecast--temp-range">
+            <span class="w_forecast--temp-high">{{forecast.temp.max}}</span> |
+            <span class="w_forecast--temp-low">{{forecast.temp.min}}</span>
           </p>
         </div>
       </section>
+      <!-- Future Forecast -->
     </ion-grid>
   </div>
 </ion-content>

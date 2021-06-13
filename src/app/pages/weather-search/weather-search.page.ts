@@ -108,7 +108,6 @@ export class WeatherSearchPage implements OnInit {
         day.temp.min = Math.round(day.temp.min);
       });
       this.futureDaysForecast = forecast.daily;
-
       resolve();
     });
   }
@@ -117,7 +116,7 @@ export class WeatherSearchPage implements OnInit {
     // Call weather api for every key
     // If not available because of internet failure or bad response
     // fill it with the storage data and show a message
-    // CREATE FORK JOIN OBSERSABLES FOR EACH KEY
+    // CREATE FORK JOIN OBSERVABLES FOR EACH KEY
     const placesCoord = [];
     storageKeys.forEach((key) => {
       placesCoord.push(this.storageService.getItem(key));
@@ -151,7 +150,12 @@ export class WeatherSearchPage implements OnInit {
   }
 
   public deleteCityWeather(cityIndex): void {
-    console.log(cityIndex);
+    this.storageService
+      .removeItem(this.citiesWithWeather[cityIndex].name)
+      .then(() => {
+        this.citiesWithWeather.splice(cityIndex, 1);
+        this.loadPlacesWithWeather();
+      });
   }
 
   public presentAlert(alertObj): void {

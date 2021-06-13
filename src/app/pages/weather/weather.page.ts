@@ -4,8 +4,9 @@ import { LocationService } from '@services/location.service';
 import { WeatherModel } from '@models/weather.model';
 import * as moment from 'moment';
 import { ForecastModel } from '@models/forecast.model';
-import { forkJoin, observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment as env } from '@env/environment';
 
 @Component({
   selector: 'app-weather',
@@ -18,6 +19,7 @@ export class WeatherPage implements OnInit {
   public selectedCity;
 
   constructor(
+    private router: Router,
     private dataRoute: ActivatedRoute,
     private locationService: LocationService,
     private weatherService: WeatherService
@@ -80,5 +82,15 @@ export class WeatherPage implements OnInit {
         this.getAllWetherInfo(position);
       });
     }
+  }
+
+  public toggleLocation(): void {
+    // Clear route params to load current location weather
+    this.router.navigate(['.']);
+  }
+
+  // Navigate to source page for more info
+  public goToSourcePage(): void {
+    window.open(env.sourcePageInfo + this.todaysWeather.id, '_blank');
   }
 }

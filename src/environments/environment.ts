@@ -9,7 +9,8 @@ export const environment = {
   weatherApiKey: '04e058dad67e4ba5f8e8574742372274',
   weatherUnits: 'metric',
   placesApiUrl: 'https://maps.googleapis.com/maps/api/place/details/json?',
-  placesApiKey: 'AIzaSyBkggCRhP7oys82ezMwakBIW0AHthsvDZQ'
+  placesApiKey: 'AIzaSyBkggCRhP7oys82ezMwakBIW0AHthsvDZQ',
+  sourcePageInfo: 'https://openweathermap.org/city/'
 };
 
 /*

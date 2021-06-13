@@ -1,25 +1,25 @@
-#main-weather {
+#w_main-weather {
   justify-content: center;
   display: flex;
   align-items: center;
   padding: 1rem;
   text-align: center;
 
-  .main-weather--icon {
+  .w_main-weather--icon {
     color: #fff;
     font-size: 8rem;
   }
 
-  .main-weather--temp {
+  .w_main-weather--temp {
     font-size: 6rem;
     width: 100%;
   }
 
-  .weather-icon {
+  .w_main-weather--icon {
     height: 10rem;
     width: 10rem;
 
-    .current-weather--img {
+    .w_main-weather--img {
       width: 100%;
       height: 100%;
     }
@@ -27,9 +27,9 @@
 }
 
 /*----------------
-	future-weather Forecast
+	forecast-weather Forecast
 -----------------*/
-#future-weather {
+#w_forecast-weather {
   margin-bottom: 10%;
   padding: 0 10%;
 
@@ -37,23 +37,23 @@
     color: #fff;
     font-size: 4rem;
   }
-  .slot-container {
+  .w_forecast-weather--slot {
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     margin: 0;
     padding: 5% 10%;
     width: 100%;
   }
-  .slot-container:first-child {
+  .w_forecast-weather--slot:first-child {
     border-top: 1px solid rgba(255, 255, 255, 0.25);
   }
 
-  .day {
+  .w_forecast-day--name {
     padding: 0;
     text-align: left;
     text-transform: uppercase;
   }
 
-  .weather-icon {
+  .w_forecast-weather--icon {
     float: right;
     font-size: 0.5em;
     height: 6rem;
@@ -62,23 +62,30 @@
     width: 6rem;
   }
 
-  #future-weather p {
+  #w_forecast-weather 
+  .w_forecast--conditions {
     text-align: left;
   }
 }
 
-.current {
+/*----------------
+	General classes
+-----------------*/
+
+.w_main-weather--temp {
   font-size: 3rem;
 }
 
-.current:after,
-.high:after,
-.low:after {
+.w_main-weather--temp:after,
+.w_main-weather--temp-high:after,
+.w_main-weather--temp-low:after,
+.w_forecast--temp-high:after,
+.w_forecast--temp-low:after {
   content: "\00b0";
   padding: 1px;
 }
 
-.page-loader {
+.w_page-loader {
   width: 4em;
   height: 4em;
   top: 50%;
@@ -87,34 +94,53 @@
   transform: translate(-50%, -50%);
 }
 
+.w_toolbar-button--location {
+  margin-right: 1rem;
+}
+
+.w_main-content--logo-container{
+  display: flex;
+  justify-content: flex-end;
+  .w_main-content--logo {
+    position: absolute;
+    bottom: 0;
+    height: 3rem;
+    width: auto;
+    padding: 10px;
+  }
+}
+
 /*----------------
 	Media Queries
 -----------------*/
-@media (min-width: 708px) {
-  /* future-weather Forecast */
-  #future-weather {
+@media (min-width: 768px) {
+  /* forecast-weather Forecast */
+  #w_forecast-weather {
     font-size: 1.1rem;
     padding: 0;
     margin-bottom: 3%;
-    .slot-container {
+    .w_forecast-weather--slot {
       border-bottom: none;
       float: left;
       padding: 16px;
       width: 25%;
     }
-    .slot-container:first-child {
+    .w_forecast-weather--slot:first-child {
       border-top: none;
     }
-    .slot-container:not(:last-child) {
+    .w_forecast-weather--slot:not(:last-child) {
       border-right: 1px solid rgba(255, 255, 255, 0.25);
       margin-bottom: 1rem;
     }
-    .day,
-    p {
+    .w_forecast-day--name,
+    .w_forecast--conditions,
+    .w_main-weather--conditions,
+    .w_forecast--temp-range{
       text-align: center;
     }
 
-    .weather-icon {
+    .w_main-weather--icon,
+    .w_forecast-weather--icon {
       font-size: 0.56em;
       float: none;
       height: 60px;
