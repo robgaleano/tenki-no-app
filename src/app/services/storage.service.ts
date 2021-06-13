@@ -40,8 +40,8 @@ export class StorageService {
     await Storage.remove({ key: storageKey });
   }
 
-  public async getAllStorage() {
-    return await Storage.keys();
+  public getAllStorageKeys() {
+    return Storage.keys();
   }
 
   public async clearItems() {

@@ -4,7 +4,8 @@ import { LocationService } from '@services/location.service';
 import { WeatherModel } from '@models/weather.model';
 import * as moment from 'moment';
 import { ForecastModel } from '@models/forecast.model';
-import { forkJoin } from 'rxjs';
+import { forkJoin, observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-weather',
@@ -14,16 +15,16 @@ import { forkJoin } from 'rxjs';
 export class WeatherPage implements OnInit {
   public futureDaysForecast: ForecastModel.Day[];
   public todaysWeather: WeatherModel.RootObject;
+  public selectedCity;
 
   constructor(
+    private dataRoute: ActivatedRoute,
     private locationService: LocationService,
     private weatherService: WeatherService
   ) {}
 
   ngOnInit() {
-    this.locationService.getPosition().then((position) => {
-      this.getAllWetherInfo(position);
-    });
+    this.chooseWeatherSource();
   }
 
   public getAllWetherInfo(position): void {
@@ -38,7 +39,6 @@ export class WeatherPage implements OnInit {
       ),
     }).subscribe(
       (weatherObservers) => {
-        console.log(weatherObservers);
         const weather = weatherObservers.currentWeather;
         const forecast = weatherObservers.weatherForecast;
 
@@ -58,5 +58,27 @@ export class WeatherPage implements OnInit {
         throw new Error(err);
       }
     );
+  }
+
+  public chooseWeatherSource(): void {
+    const routeParams = this.dataRoute.snapshot.params;
+    console.log(routeParams);
+    if (routeParams.hasOwnProperty('cityWeather')) {
+      this.selectedCity = JSON.parse(routeParams.cityWeather);
+    } else {
+      this.selectedCity = undefined;
+    }
+
+    if (this.selectedCity) {
+      const position = {
+        lat: this.selectedCity.coord.lat,
+        lng: this.selectedCity.coord.lon,
+      };
+      this.getAllWetherInfo(position);
+    } else {
+      this.locationService.getPosition().then((position) => {
+        this.getAllWetherInfo(position);
+      });
+    }
   }
 }
