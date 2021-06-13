@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Weather Search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-weather-searchbar
+    (locationSelected)="getAllWeatherInfo($event)"
+  ></app-weather-searchbar>
+  <ion-list class="ws_weather-list">
+    <ion-item-sliding
+      #citySlide
+      *ngFor="let city of citiesWithWeather; let i = index"
+    >
+      <ion-item
+        class="ws_weather-list--item"
+        button
+        detail="true"
+        (click)="setCurrentWeather(city)"
+      >
+        <ion-note class="ws_item-note" slot="start"
+          >{{city?.main.temp}}</ion-note
+        >
+        <ion-label class="ws_item-label">{{city?.name}}</ion-label>
+        <img
+          class="ws_item-icon--img"
+          slot="end"
+          src="http://openweathermap.org/img/wn/{{city?.weather[0].icon}}@2x.png"
+          alt=""
+        />
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option
+          color="danger"
+          expandable
+          (click)="deleteCityWeather(i);
+          citySlide.close();"
+        >
+          Delete
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

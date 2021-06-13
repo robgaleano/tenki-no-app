@@ -4,12 +4,16 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'weather',
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    path: 'weather',
+    loadChildren: () => import('@pages/weather/weather.module').then(m => m.WeatherPageModule)
+  },
+  {
+    path: 'weather-search',
+    loadChildren: () => import('@pages/weather-search/weather-search.module').then(m => m.WeatherSearchPageModule)
   }
 ];
 
@@ -19,4 +23,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

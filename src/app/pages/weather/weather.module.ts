@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { FolderPageRoutingModule } from './folder-routing.module';
-
-import { FolderPage } from './folder.page';
+import { WeatherPageRoutingModule } from './weather-routing.module';
+import { WeatherPage } from './weather.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FolderPageRoutingModule
+    WeatherPageRoutingModule
   ],
-  declarations: [FolderPage]
+  declarations: [WeatherPage]
 })
-export class FolderPageModule {}
+export class WeatherPageModule { }
